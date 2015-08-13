@@ -14,3 +14,16 @@ String.prototype.isEmail = function () {
 String.prototype.trim = function () {
     return this.replace(/^\s+|\s+$/g,"");
 }
+
+String.prototype.ucwords = function () {
+    //   example 1: ucwords('kevin van  zonneveld');
+    //   returns 1: 'Kevin Van  Zonneveld'
+    //   example 2: ucwords('HELLO WORLD');
+    //   returns 2: 'HELLO WORLD'
+
+    var str = this;
+    return this.replace(/^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g, function($1) {
+                return $1.toUpperCase();
+            });
+
+}
