@@ -7,13 +7,12 @@ String.prototype.isEmail = function () {
     var exclude=/[^@\-\.\w]|^[_@\.\-]|[\._\-]{2}|[@\.]{2}|(@)[^@]*\1/;
     var check=/@[\w\-]+\./;
     var checkend=/\.[a-zA-Z]{2,3}$/;
-    if(((email.search(exclude) != -1)||(email.search(check)) == -1)||(email.search(checkend) == -1)){return false;}
-    else {return true;}
-}
+    return !(((email.search(exclude) != -1) || (email.search(check)) == -1) || (email.search(checkend) == -1));
+};
 
 String.prototype.trim = function () {
     return this.replace(/^\s+|\s+$/g,"");
-}
+};
 
 String.prototype.ucwords = function () {
     //   example 1: ucwords('kevin van  zonneveld');
@@ -26,7 +25,7 @@ String.prototype.ucwords = function () {
                 return $1.toUpperCase();
             });
 
-}
+};
 
 String.prototype.createSlug = function () {
     var str = this;
@@ -46,4 +45,8 @@ String.prototype.createSlug = function () {
     
     return str;
 
-} 
+} ;
+
+String.prototype.replaceAll = function(str1, str2, ignore){
+	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+};
