@@ -10,11 +10,13 @@ var EventsFunction = (function() {
         var timeWindow = 500,
             timeout;
 
-        var implementation = function (callback) {
+        var implementation = function (options, callback) {
             callback();
         };
 
-        return function() {
+        return function(options, callback) {
+            timeWindow = options.time || timeWindow;
+
             var context = this;
             var args = arguments;
             clearTimeout(timeout);
@@ -30,11 +32,13 @@ var EventsFunction = (function() {
         var timeWindow = 500; // tempo em ms
         var lastExecution = new Date((new Date()).getTime() - timeWindow);
 
-        var implementation = function (callback) {
+        var implementation = function (options, callback) {
             callback();
         };
 
-        return function() {
+        return function(options, callback) {
+            timeWindow = options.time || timeWindow;
+            
             if ((lastExecution.getTime() + timeWindow) <= (new Date()).getTime()) {
                 lastExecution = new Date();
                 return implementation.apply(this, arguments);
