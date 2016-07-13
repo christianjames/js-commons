@@ -1,11 +1,5 @@
-var EventsFunction = (function() {
-    'use strict';
- 
-    var $public = {};
-    var $private = {};
-    
-    $public.getColorsImageCanvas = function () {
-        var ctxCanvas = canvas.getContext('2d');
+Image.prototype.getColorsImageCanvas = function () {
+    var ctxCanvas = canvas.getContext('2d');
     //monta histograma
     var hex, r,g,b; //,alpha;
     var histograma = {};
@@ -61,8 +55,4 @@ var EventsFunction = (function() {
     });
 
     return coresMaisComum;
-    }
- 
-    return $public;
- 
-})();
+};
