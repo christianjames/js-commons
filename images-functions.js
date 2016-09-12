@@ -1,4 +1,4 @@
-Image.prototype.getColorsImageCanvas = function () {
+Image.prototype.getColorsImageCanvas = function (canvas) {
     var ctxCanvas = canvas.getContext('2d');
     //monta histograma
     var hex, r,g,b; //,alpha;
