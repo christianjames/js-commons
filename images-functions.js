@@ -1,8 +1,17 @@
-Image.prototype.getColorsImageCanvas = function (canvas) {
+Image.prototype.getColorsImageCanvas = function (options) {
+    
+    var canvas = document.createElement('canvas');
     var ctxCanvas = canvas.getContext('2d');
+
+    canvas.width = options.width;
+    canvas.height = options.height;
+
+    ctxCanvas.drawImage(this, 0 , 0, options.width, options.height);
+
     //monta histograma
     var hex, r,g,b; //,alpha;
     var histograma = {};
+
     var map = ctxCanvas.getImageData(0, 0, canvas.width, canvas.height).data;
 
     //valor em hexadecimal
@@ -25,15 +34,29 @@ Image.prototype.getColorsImageCanvas = function (canvas) {
         r = arredonda(map[i]);
         g = arredonda(map[i+1]);
         b = arredonda(map[i+2]);
-        //alpha = map[i+2]; //ignora canal alpha
+        a = arredonda(map[i+3]);
+        
+        // a = 1;
 
-        hex = rgbToHex(r, g, b);
+        if (a == 0) {
+            // console.log(i, map[i+3]);
+        }
+        else {
+            var rgb = String(r+','+g+','+b);
+            //alpha = map[i+2]; //ignora canal alpha
 
-        //adiciona no histograma ou incrementa se já existir
-        if (histograma[hex] === undefined) {
-            histograma[hex] = 1;
-        } else {
-            histograma[hex]++;
+            hex = rgbToHex(r, g, b);
+            var x = (i / 4) % canvas.width;
+            var y = Math.floor((i / 4) / canvas.width);
+
+            //adiciona no histograma ou incrementa se já existir
+            if (histograma[hex] === undefined) {
+                // console.log('%c teste', 'color: '+hex, x, y, canvas.width, canvas.height);
+
+                histograma[hex] = {count: 1, x: x, y: y};
+            } else {
+                histograma[hex] = {count: histograma[hex].count+1, x: x, y: y};
+            }
         }
     }
 
@@ -41,7 +64,7 @@ Image.prototype.getColorsImageCanvas = function (canvas) {
 
     //recupera cor mais comum
     for (var cor in histograma) {
-        coresMaisComum.push({hexa: cor, count: histograma[cor]});
+        coresMaisComum.push({hexa: cor, x: histograma[cor].x, y: histograma[cor].y, count: histograma[cor].count});
     }
 
     coresMaisComum = coresMaisComum.sort(function(a,b) {
