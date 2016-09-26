@@ -1,4 +1,11 @@
 CustomFunctions = {
+    getYoutubeID: function (url) {
+    
+        var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+        r = url.match(rx);
+        return r[1];
+    },
     getdaysInMonth: function (month,year) { 
         return new Date(year, month, 0).getDate(); 
     },
