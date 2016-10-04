@@ -1,4 +1,16 @@
 CustomFunctions = {
+    getBase64Image: function (imgElem) {
+        // imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
+        var canvas = document.createElement("canvas");
+        canvas.width = imgElem.width;
+        canvas.height = imgElem.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(imgElem, 0, 0, imgElem.width, imgElem.height);
+        var dataURL = canvas.toDataURL("image/png");
+
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    },
     getYoutubeID: function (url) {
     
         var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
