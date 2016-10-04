@@ -1,4 +1,4 @@
-Image.prototype.getBase64() {
+Image.prototype.getBase64 = function () {
     // imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
     var canvas = document.createElement("canvas");
     canvas.width = this.width;
