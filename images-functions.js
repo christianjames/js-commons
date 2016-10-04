@@ -1,3 +1,16 @@
+Image.prototype.getBase64() {
+    // imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
+    var canvas = document.createElement("canvas");
+    canvas.width = this.width;
+    canvas.height = this.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(this, 0, 0, this.width, this.height);
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+};
+
 Image.prototype.getColorsImageCanvas = function (options) {
     
     var canvas = document.createElement('canvas');
