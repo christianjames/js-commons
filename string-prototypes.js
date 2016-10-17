@@ -13,9 +13,9 @@ String.prototype.linkify = function(options) {
     var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
 
     return this
-        .replace(urlPattern, '<a href="$&">$&</a>')
-        .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
-        .replace(emailAddressPattern, '<a href="mailto:$&">$&</a>');
+        .replace(urlPattern, '<a target="'+options.target+'" href="$&">$&</a>')
+        .replace(pseudoUrlPattern, '$1<a target="'+options.target+'" href="http://$2">$2</a>')
+        .replace(emailAddressPattern, '<a target="'+options.target+'" href="mailto:$&">$&</a>');
 };
 
 String.prototype.toTileCase = function () {
